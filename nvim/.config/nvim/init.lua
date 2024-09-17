@@ -89,6 +89,9 @@ vim.keymap.set('n', '<leader>f', function()
   vim.lsp.buf.format()
 end)
 
+-- chmod current file
+vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
+
 -- Find todos
 vim.keymap.set('n', '<leader>st', '<cmd>TodoTelescope<CR>', { desc = '[S]earch [T]odos' })
 
@@ -276,7 +279,6 @@ require('lazy').setup({
     config = function()
       local hidden_names_list = {
         '..',
-        '.git',
         '.DS_Store',
       }
       require('oil').setup {

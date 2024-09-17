@@ -218,6 +218,9 @@ require('lazy').setup({
     -- TODO: Add multiline threshold here to prevent weirdness
     'nvim-treesitter/nvim-treesitter-context',
     config = function()
+      require('treesitter-context').setup {
+        multiline_threshold = 1,
+      }
       local treesitter_context = require 'treesitter-context'
 
       vim.keymap.set('n', '[c', treesitter_context.go_to_context)

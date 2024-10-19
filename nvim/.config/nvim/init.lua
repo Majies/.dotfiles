@@ -196,6 +196,19 @@ require('lazy').setup({
     end,
   },
 
+  -- {
+  --   'nvim-tree/nvim-web-devicons',
+  --   -- opts = {
+  --   --   override_by_filename = {
+  --   --     ['yarn.lock'] = {
+  --   --       icon = '',
+  --   --       color = '#f1502f',
+  --   --       name = 'Yarn Lock',
+  --   --     },
+  --   --   },
+  --   -- },
+  -- },
+
   -- Here is a more advanced example where we pass configuration
   -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
   --    require('gitsigns').setup({ ... })

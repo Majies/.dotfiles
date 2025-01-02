@@ -53,6 +53,8 @@ brew "teamookla/speedtest/speedtest"
 cask "aerospace"
 # GPU-accelerated terminal emulator
 cask "alacritty"
+# Voice and text chat software
+cask "discord"
 cask "font-hack-nerd-font"
 cask "font-sf-mono-nerd-font"
 cask "font-sf-pro"

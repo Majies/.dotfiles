@@ -1,4 +1,3 @@
-zstyle ':z4h:' auto-update      'no'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
 
@@ -29,7 +28,7 @@ export GPG_TTY=$TTY
 
 # Source additional local files if they exist.
 z4h source ~/.env.zsh
-# z4h source ~/.zshwork
+z4h source ~/.zshwork
 
 # Define key bindings.
 z4h bindkey undo Ctrl+/   Shift+Tab  # undo the last command line change
@@ -63,6 +62,9 @@ alias ls='lsd'
 # Override cat with bat
 alias cat='bat'
 
+# Clone a gitlab project from anywhere into ~/dev
+alias clone='clone-gitlab.sh'
+
 # Add flags to existing aliases.
 alias ls="${aliases[ls]:-ls} -A"
 
@@ -77,9 +79,8 @@ alias vim='nvim'
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+export NODE_EXTRA_CA_CERTS=/users/matthew.law/zscaler-root-ca.cer
+export CURL_CA_BUNDLE=/users/matthew.law/zscaler-root-ca.cer
 
 export NODE_REPL_HISTORY=""
 
@@ -87,6 +88,7 @@ PATH="$PATH":"$HOME/.config/.local/scripts/"
 
 # opens tmux sessionizer
 bindkey -s '^f' 'tmux-sessionizer\n'
+bindkey -s '^V' 'nvim .^M'
 
 # changes ctrl + L behaviour to clear
 function clear-screen-and-scrollback() {
@@ -102,3 +104,5 @@ bindkey '^L' clear-screen-and-scrollback
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh

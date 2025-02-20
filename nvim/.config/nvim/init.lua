@@ -179,6 +179,64 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
 
   {
+    dir = '~/dev/qlint',
+    name = 'qlint',
+    config = function()
+      local qlint = require 'qlint'
+
+      qlint.setup()
+
+      vim.keymap.set('n', '<leader>cl', qlint.test)
+    end,
+  },
+
+  {
+    'oysandvik94/curl.nvim',
+    cmd = { 'CurlOpen' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = true,
+    keys = {
+      {
+        '<leader>cc',
+        function()
+          require('curl').open_curl_tab()
+        end,
+        desc = 'Open a curl tab scoped to the current working directory',
+      },
+      {
+        '<leader>co',
+        function()
+          require('curl').close_curl_tab()
+        end,
+        desc = 'Open a curl tab scoped to the current working directory',
+      },
+      {
+        '<leader>cg',
+        function()
+          require('curl').open_global_tab()
+        end,
+        desc = 'Open a curl tab with a global scope',
+      },
+      {
+        '<leader>cgc',
+        function()
+          require('curl').create_global_collection()
+        end,
+        desc = 'Create or open a collection with a name from from user input',
+      },
+      {
+        '<leader>cfc',
+        function()
+          require('curl').pick_global_collection()
+        end,
+        desc = 'Choose a global collection and open it',
+      },
+    },
+  },
+
+  {
     'alexghergh/nvim-tmux-navigation',
     config = function()
       local nvim_tmux_nav = require 'nvim-tmux-navigation'
@@ -247,6 +305,17 @@ require('lazy').setup({
   {
     'shortcuts/no-neck-pain.nvim',
     version = '*',
+    opts = {
+      width = 200,
+      mappings = {
+        enabled = true,
+        toggle = '<Leader>np',
+        toggleRightSide = '<Leader>nqr',
+        widthUp = '<Leader>n=',
+        widthDown = '<Leader>n-',
+        scratchPad = '<Leader>ns',
+      },
+    },
   },
 
   {
@@ -646,7 +715,7 @@ require('lazy').setup({
       local nvim_lspconfig = require 'lspconfig'
       local servers = {
         -- clangd = {},
-        gopls = {},
+        -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -889,7 +958,13 @@ require('lazy').setup({
     'folke/todo-comments.nvim',
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = { signs = false },
+    opts = {
+      keywords = {
+        TASK = { icon = ' ', color = 'hint', alt = { 'INFO' } },
+      },
+      merge_keywords = true,
+      signs = false,
+    },
   },
 
   { -- Collection of various small independent plugins/modules
@@ -933,7 +1008,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'regex' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {

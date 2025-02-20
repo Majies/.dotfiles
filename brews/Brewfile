@@ -1,66 +1,44 @@
 tap "epk/epk"
 tap "felixkratz/formulae"
 tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
 tap "homebrew/command-not-found"
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 tap "nikitabobko/tap"
 tap "teamookla/speedtest"
-# Platform built on V8 to build network applications
-brew "node"
-# CLI tool for Angular
-brew "angular-cli"
-# Bourne-Again SHell, a UNIX command interpreter
+brew "autoconf"
+brew "gmp"
+brew "libyaml"
+brew "openssl@3"
+brew "readline"
+brew "asdf"
 brew "bash"
-# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Command-line fuzzy finder written in Go
+brew "cliclick"
 brew "fzf"
-# GitHub command-line tool
+brew "gawk"
 brew "gh"
-# Distributed revision control system
 brew "git"
-# Lightweight and flexible command-line JSON processor
+brew "gnupg"
 brew "jq"
-# Clone of ls with colorful output, file type icons, and more
 brew "lsd"
-# Ambitious Vim-fork focused on extensibility and agility
+brew "mkcert"
 brew "neovim"
-# Manage multiple Node.js versions
-brew "nvm"
-# Execute binaries from Python packages in isolated environments
 brew "pipx"
-# Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Organize software neatly under a single directory tree (e.g. /usr/local)
 brew "stow"
-# Terminal multiplexer
 brew "tmux"
-# Display directories as trees (with optional color/HTML output)
 brew "tree"
-# Process YAML, JSON, XML, CSV and properties documents from the CLI
 brew "yq"
-# A window border system for macOS
 brew "felixkratz/formulae/borders"
-# Custom macOS statusbar with shell plugin, interaction and graph support
 brew "felixkratz/formulae/sketchybar"
-# Ookla Speedtest
-brew "teamookla/speedtest/speedtest"
-# AeroSpace is an i3-like tiling window manager for macOS
 cask "aerospace"
-# GPU-accelerated terminal emulator
 cask "alacritty"
-# Voice and text chat software
 cask "discord"
 cask "font-hack-nerd-font"
 cask "font-sf-mono-nerd-font"
 cask "font-sf-pro"
-# Set of tools to manage resources and applications hosted on Google Cloud
 cask "google-cloud-sdk"
-# Control your tools with a few keystrokes
 cask "raycast"
-# Tool that provides consistent, highly configurable symbols for apps
 cask "sf-symbols"

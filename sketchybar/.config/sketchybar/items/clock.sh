@@ -1,6 +1,6 @@
 #!/bin/bash
 
-battery=(
+clock=(
     icon=􀉉
     icon.color=$RED_SOLID 
     icon.font=$FONT_BOLD_LG
@@ -11,9 +11,10 @@ battery=(
 
     background.padding_left=20
 
-    update_freq=20 
-    script="$PLUGIN_DIR/battery.sh"
+    update_freq=10 
+    script="$PLUGIN_DIR/clock.sh"
 )
-sketchybar --add item battery right      \
-           --set battery "${battery[@]}" \
+
+sketchybar --add item clock right    \
+           --set clock "${clock[@]}" \
 

@@ -1,5 +1,9 @@
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=3.0'
+  'exec-and-forget borders active_color=0xffFAB387 inactive_color=0xFF1E1E2E width=4.0'
+]
+
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
 ]
 
 start-at-login = true
@@ -16,14 +20,22 @@ key-mapping.preset = 'qwerty'
 
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 on-focus-changed = ['move-mouse window-lazy-center']
+automatically-unhide-macos-hidden-apps = true
 
 [gaps]
 inner.horizontal = 18
 inner.vertical =   18
-outer.left =       18
 outer.bottom =     18
-outer.top =        18
+outer.top =        60
+# outer.top =        26
+
+# normal size
+outer.left =       18
 outer.right =      18
+# ultra wide
+# outer.right =        350
+# outer.left =        350
+
 
 [mode.main.binding]
 
@@ -48,12 +60,13 @@ alt-1 = 'workspace 1' # Misc 1
 alt-2 = 'workspace 2' # Misc 2
 alt-a = 'workspace A' # Apple music
 alt-c = 'workspace C' # Chrome
-alt-d = 'workspace D' # Discord
+alt-d = 'workspace D' # Dev Tools
 alt-e = 'workspace E' # Email
 alt-m = 'workspace M' # Microsoft Teams
 alt-n = 'workspace N' # Notes
 alt-s = 'workspace S' # Slack
 alt-t = 'workspace T' # Termnial
+alt-x = 'workspace X' # Xcode
 
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
@@ -65,6 +78,7 @@ alt-shift-m = 'move-node-to-workspace M'
 alt-shift-n = 'move-node-to-workspace N'
 alt-shift-s = 'move-node-to-workspace S'
 alt-shift-t = 'move-node-to-workspace T'
+alt-shift-x = 'move-node-to-workspace X'
 
 alt-f = 'fullscreen'
 alt-tab = 'workspace-back-and-forth'
@@ -75,12 +89,22 @@ esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] 
 f = ['layout floating tiling', 'mode main']
 b = [
-  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=3.0',
+  'exec-and-forget borders active_color=0xffFAB387 inactive_color=0xFF1E1E2E width=4.0',
  'mode main' 
 ]
+u = ['resize width 600', 'mode main']
 backspace = ['close-all-windows-but-current', 'mode main']
 
 alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+[[on-window-detected]]
+    if.app-id = 'com.apple.iphonesimulator'
+    run = 'move-node-to-workspace D'
+
+
+[[on-window-detected]]
+    if.app-id = 'com.electron.cypress'
+    run = 'move-node-to-workspace D'

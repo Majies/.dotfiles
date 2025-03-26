@@ -1,0 +1,17 @@
+export FONT_FACE="JetBrainsMono Nerd Font"
+
+# FONT_WEIGHT_SIZE
+export FONT_LIGHT_SM="$FONT_FACE:Light:12.0"
+export FONT_LIGHT_MD="$FONT_FACE:Light:15.0"
+export FONT_LIGHT_LG="$FONT_FACE:Light:20.0"
+export FONT_LIGHT_XL="$FONT_FACE:Light:24.0"
+
+export FONT_REGULAR_SM="$FONT_FACE:Medium:12.0"
+export FONT_REGULAR_MD="$FONT_FACE:Medium:15.0"
+export FONT_REGULAR_LG="$FONT_FACE:Medium:20.0"
+export FONT_REGULAR_XL="$FONT_FACE:Medium:24.0"
+
+export FONT_BOLD_SM="$FONT_FACE:Bold:12.0"
+export FONT_BOLD_MD="$FONT_FACE:Bold:15.0"
+export FONT_BOLD_LG="$FONT_FACE:Bold:20.0"
+export FONT_BOLD_XL="$FONT_FACE:Bold:24.0"

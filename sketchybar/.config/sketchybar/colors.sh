@@ -1,44 +1,87 @@
 #!/bin/bash
 
-export WHITE=0xffffffff
+# Color Palette
+export BLACK=0xff181926
+export WHITE=0xffcad3f5
+export RED=0xffed8796
+export GREEN=0xffa6da95
+export BLUE=0xff8aadf4
+export YELLOW=0xffeed49f
+export ORANGE=0xfff5a97f
+export MAGENTA=0xffc6a0f6
+export GREY=0xff939ab7
 
-# -- Teal Scheme --
-# export BAR_COLOR=0xff001f30
-# export ITEM_BG_COLOR=0xff003547
-# export ACCENT_COLOR=0xff2cf9ed
+# General bar colors
+export BAR_COLOR=0xa024273a
+export ICON_COLOR=$WHITE # Color of all icons
+export LABEL_COLOR=$WHITE # Color of all labels
+export BACKGROUND_1=0xCC24273a
+export BACKGROUND_2=0x90494d64
 
-# -- Gray Scheme --
-# export BAR_COLOR=0xff101314
-# export ITEM_BG_COLOR=0xff353c3f
-# export ACCENT_COLOR=0xffffffff
+export POPUP_BACKGROUND_COLOR=0xff24273a
+export POPUP_BORDER_COLOR=$WHITE
 
-# -- Purple Scheme --
-export BAR_COLOR=0x00000000
-export ITEM_BG_COLOR=0x1E1D2FFF
-export ACCENT_COLOR=0xffeb46f9
-
-# -- Red Scheme ---
-# export BAR_COLOR=0xff23090e
-# export ITEM_BG_COLOR=0xff591221
-# export ACCENT_COLOR=0xffff2453
-
-# -- Blue Scheme ---
-# export BAR_COLOR=0xff021254
-# export ITEM_BG_COLOR=0xff093aa8
-# export ACCENT_COLOR=0xff15bdf9
-
-# -- Green Scheme --
-# export BAR_COLOR=0xff003315
-# export ITEM_BG_COLOR=0xff008c39
-# export ACCENT_COLOR=0xff1dfca1
+export SHADOW_COLOR=$BLACK
 
 
-# -- Orange Scheme --
-# export BAR_COLOR=0xff381c02
-# export ITEM_BG_COLOR=0xff99440a
-# export ACCENT_COLOR=0xfff97716
+export TRANSPARENT=0x00000000
 
-# -- Yellow Scheme --
-# export BAR_COLOR=0xff2d2b02
-# export ITEM_BG_COLOR=0xff8e7e0a
-# export ACCENT_COLOR=0xfff7fc17
+# Catpuccin Mocha
+export ROSEWATER=F5E0DC
+export FLAMINGO=F2CDCD
+export PINK=F5C2E7
+export MAUVE=CBA6F7
+export RED=F38BA8
+export MAROON=EBA0AC
+export PEACH=FAB387
+export YELLOW=F9E2AF
+export GREEN=A6E3A1
+export TEAL=94E2D5
+export SKY=89DCEB
+export SAPPHIRE=74C7EC
+export BLUE=89B4FA
+export LAVENDER=B4BEFE
+export TEXT=CDD6F4
+export SUBTEXT1=BAC2DE
+export SUBTEXT0=A6ADC8
+export OVERLAY2=9399B2
+export OVERLAY1=7F849C
+export OVERLAY0=6C7086
+export SURFACE2=585B70
+export SURFACE1=45475A
+export SURFACE0=313244
+export BASE=1E1E2E
+export MANTLE=181825
+export CRUST=11111B
+
+# Define solid colors with 100% opacity (0xFF prefix)
+export ROSEWATER_SOLID=0xFF$ROSEWATER
+export FLAMINGO_SOLID=0xFF$FLAMINGO
+export PINK_SOLID=0xFF$PINK
+export MAUVE_SOLID=0xFF$MAUVE
+export RED_SOLID=0xFF$RED
+export MAROON_SOLID=0xFF$MAROON
+export PEACH_SOLID=0xFF$PEACH
+export YELLOW_SOLID=0xFF$YELLOW
+export GREEN_SOLID=0xFF$GREEN
+export TEAL_SOLID=0xFF$TEAL
+export SKY_SOLID=0xFF$SKY
+export SAPPHIRE_SOLID=0xFF$SAPPHIRE
+export BLUE_SOLID=0xFF$BLUE
+export LAVENDER_SOLID=0xFF$LAVENDER
+export TEXT_SOLID=0xFF$TEXT
+export SUBTEXT1_SOLID=0xFF$SUBTEXT1
+export SUBTEXT0_SOLID=0xFF$SUBTEXT0
+export OVERLAY2_SOLID=0xFF$OVERLAY2
+export OVERLAY1_SOLID=0xFF$OVERLAY1
+export OVERLAY0_SOLID=0xFF$OVERLAY0
+export SURFACE2_SOLID=0xFF$SURFACE2
+export SURFACE1_SOLID=0xFF$SURFACE1
+export SURFACE0_SOLID=0xFF$SURFACE0
+export BASE_SOLID=0xFF$BASE
+export MANTLE_SOLID=0xFF$MANTLE
+export CRUST_SOLID=0xFF$CRUST
+
+# Example: For variable opacity values, simply prepend your desired alpha value.
+# For example, 50% opacity (0x80) for ROSEWATER:
+export ROSEWATER_50=0x80$ROSEWATER

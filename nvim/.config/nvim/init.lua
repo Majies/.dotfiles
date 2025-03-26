@@ -256,15 +256,15 @@ require('lazy').setup({
 
   -- {
   --   'nvim-tree/nvim-web-devicons',
-  --   -- opts = {
-  --   --   override_by_filename = {
-  --   --     ['yarn.lock'] = {
-  --   --       icon = '',
-  --   --       color = '#f1502f',
-  --   --       name = 'Yarn Lock',
-  --   --     },
-  --   --   },
-  --   -- },
+  -- opts = {
+  --   override_by_filename = {
+  --     ['yarn.lock'] = {
+  --       icon = '',
+  --       color = '#f1502f',
+  --       name = 'Yarn Lock',
+  --     },
+  --   },
+  -- },
   -- },
 
   -- Here is a more advanced example where we pass configuration
@@ -300,6 +300,16 @@ require('lazy').setup({
 
   {
     'tpope/vim-fugitive',
+    keys = {
+      { '<leader>gg', ':G<CR>', desc = '[G]it' },
+      { '<leader>ga', ':G add .<CR>', desc = '[G]it [A]dd all' },
+      { '<leader>gp', ':G push<CR>', desc = '[G]it [P]ush' },
+      { '<leader>gfp', ':G push --force<CR>', desc = '[G]it [F]orce [P]ush' },
+      { '<leader>gcm', ':G commit -m ""<Left>', desc = '[G]it [C]ommit [M]essage' },
+      { '<leader>gca', ':G commit --amend --no-edit<CR>', desc = '[G]it [C]ommit [A]mend' },
+      { '<leader>gnb', ':G checkout -b ', desc = '[G]it [N]ew [B]ranch' },
+      { '<leader>gb', ':G branch<CR>', desc = '[G]it [B]ranch' },
+    },
   },
 
   {
@@ -563,6 +573,7 @@ require('lazy').setup({
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'b0o/schemastore.nvim',
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -674,6 +685,14 @@ require('lazy').setup({
               group = highlight_augroup,
               callback = vim.lsp.buf.clear_references,
             })
+
+            vim.api.nvim_create_autocmd('LspDetach', {
+              group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+              callback = function(event2)
+                vim.lsp.buf.clear_references()
+                vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+              end,
+            })
           end
 
           -- The following autocommand is used to enable inlay hints in your
@@ -685,14 +704,6 @@ require('lazy').setup({
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
             end, '[T]oggle Inlay [H]ints')
           end
-        end,
-      })
-
-      vim.api.nvim_create_autocmd('LspDetach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
-        callback = function(event)
-          vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event.buf }
         end,
       })
 
@@ -728,10 +739,35 @@ require('lazy').setup({
         angularls = {
           root_dir = nvim_lspconfig.util.root_pattern('angular.json', 'project.json'),
         },
-        spectral = {},
-        --
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = {
+                enable = false,
+                url = '',
+              },
+              schemas = require('schemastore').yaml.schemas {
+                -- select subset from the JSON schema catalog
+                select = {
+                  'gitlab-ci',
+                },
+              },
+            },
+          },
+        },
 
-        -- yamlls = {},
+        jsonls = {
+          settings = {
+            json = {
+              schemas = require('schemastore').json.schemas {
+                select = {
+                  'package.json',
+                },
+              },
+              validate = { enable = true },
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -931,7 +967,16 @@ require('lazy').setup({
       }
     end,
   },
-
+  -- {
+  --   'catppuccin/nvim',
+  --   name = 'catppuccin',
+  --   priority = 1000,
+  --   opts = { transparent_background = true },
+  --   init = function()
+  --     vim.cmd.colorscheme 'catppuccin'
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.

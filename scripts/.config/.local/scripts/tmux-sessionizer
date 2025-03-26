@@ -3,14 +3,17 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/.config ~/.dotfiles/nvim/.config ~/dev ~/.config/.local -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$( ( echo "~/.dotfiles"; find ~/dev -mindepth 1 -maxdepth 1 -type d ) | sed "s|$HOME|~|g" | fzf )
 fi
 
 if [[ -z $selected ]]; then
     exit 0
 fi
 
+selected="${selected/#\~/$HOME}"
+
 selected_name=$(basename "$selected" | tr . _)
+
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then

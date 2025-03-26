@@ -75,12 +75,13 @@ alias detach='tmux detach'
 # Override vim with neovim
 alias vim='nvim'
 
+# Docker
+alias ld='lazydocker'
+
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
-export NODE_EXTRA_CA_CERTS=/users/matthew.law/zscaler-root-ca.cer
-export CURL_CA_BUNDLE=/users/matthew.law/zscaler-root-ca.cer
 
 export NODE_REPL_HISTORY=""
 
@@ -102,7 +103,18 @@ function clear-screen-and-scrollback() {
 zle -N clear-screen-and-scrollback
 bindkey '^L' clear-screen-and-scrollback
 
+docker() {
+  if [[ "$1" == "compose" ]]; then
+    shift
+    command docker-compose "$@"
+  else
+    command docker "$@"
+  fi
+}
+
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+export PATH=$PATH:$HOME/.local/opt/go/bin
+
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"

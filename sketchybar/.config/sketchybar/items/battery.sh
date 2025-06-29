@@ -2,12 +2,12 @@
 
 battery=(
     icon=􀉉
-    icon.color=$RED_SOLID 
+    icon.color=$PEACH_SOLID
     icon.font=$FONT_BOLD_LG
     icon.padding_right=10
 
     label.font=$FONT_BOLD_SM
-    label.color=$TEXT_SOLID
+    label.color=$SURFACE0_SOLID
 
     background.padding_left=20
 

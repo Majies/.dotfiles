@@ -3,7 +3,7 @@
 function icon_map() {
   case "$1" in
   "Alacritty")
-    echo ""
+    echo ""
     ;;
   "Microsoft Teams")
     echo "󰊻"

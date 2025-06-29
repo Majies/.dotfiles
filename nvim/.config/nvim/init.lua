@@ -165,6 +165,7 @@ require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   'ThePrimeagen/vim-be-good',
+  { 'brenoprata10/nvim-highlight-colors', opts = {} },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -762,6 +763,8 @@ require('lazy').setup({
               schemas = require('schemastore').json.schemas {
                 select = {
                   'package.json',
+                  'tsconfig.json',
+                  'Expo SDK',
                 },
               },
               validate = { enable = true },

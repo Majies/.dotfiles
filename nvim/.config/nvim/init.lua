@@ -180,15 +180,8 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
 
   {
-    dir = '~/dev/qlint',
-    name = 'qlint',
-    config = function()
-      local qlint = require 'qlint'
-
-      qlint.setup()
-
-      vim.keymap.set('n', '<leader>cl', qlint.test)
-    end,
+    'supermaven-inc/supermaven-nvim',
+    opts = {},
   },
 
   {
@@ -310,6 +303,8 @@ require('lazy').setup({
       { '<leader>gca', ':G commit --amend --no-edit<CR>', desc = '[G]it [C]ommit [A]mend' },
       { '<leader>gnb', ':G checkout -b ', desc = '[G]it [N]ew [B]ranch' },
       { '<leader>gb', ':G branch<CR>', desc = '[G]it [B]ranch' },
+      { '<leader>gum', ':G pull origin main<CR>', desc = '[G]it [U]update [M]ain (pull)' },
+      { '<leader>guc', ':G pull<CR>', desc = '[G]it [U]update [C]urrent (pull)' },
     },
   },
 

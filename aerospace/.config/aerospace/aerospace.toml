@@ -33,7 +33,7 @@ outer.top =        60
 outer.left =       18
 outer.right =      18
 # ultra wide
-# outer.right =        350
+# outer.right =    :   350
 # outer.left =        350
 
 

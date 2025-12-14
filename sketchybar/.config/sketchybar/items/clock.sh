@@ -1,11 +1,6 @@
 #!/bin/bash
 
 clock=(
-    icon=􀉉
-    icon.color=$PEACH_SOLID
-    icon.font=$FONT_BOLD_LG
-    icon.padding_right=10
-
     label.font=$FONT_BOLD_SM
     label.color=$SURFACE2_SOLID
 

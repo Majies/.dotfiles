@@ -44,5 +44,3 @@ bar_laptop=(
 )
 
 sketchybar --bar "${bar[@]}"
-
-

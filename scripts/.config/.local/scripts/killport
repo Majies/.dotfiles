@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+  echo "Usage: killport <port>"
+  return 1
+fi
+
+kill $(lsof -t -i:$1)

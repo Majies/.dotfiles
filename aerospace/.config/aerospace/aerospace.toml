@@ -33,7 +33,7 @@ outer.top =        60
 outer.left =       18
 outer.right =      18
 # ultra wide
-# outer.right =    :   350
+# outer.right =       350
 # outer.left =        350
 
 
@@ -58,7 +58,7 @@ alt-shift-equal = 'resize smart +50'
 
 alt-1 = 'workspace 1' # Misc 1
 alt-2 = 'workspace 2' # Misc 2
-alt-a = 'workspace A' # Apple music
+alt-a = 'workspace A' # AI
 alt-c = 'workspace C' # Chrome
 alt-d = 'workspace D' # Dev Tools
 alt-e = 'workspace E' # Email
@@ -66,7 +66,9 @@ alt-m = 'workspace M' # Microsoft Teams
 alt-n = 'workspace N' # Notes
 alt-s = 'workspace S' # Slack
 alt-t = 'workspace T' # Termnial
+alt-y = 'workspace Y' # YouTube Music
 alt-x = 'workspace X' # Xcode
+alt-p = 'workspace P' # Xcode
 
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
@@ -78,7 +80,9 @@ alt-shift-m = 'move-node-to-workspace M'
 alt-shift-n = 'move-node-to-workspace N'
 alt-shift-s = 'move-node-to-workspace S'
 alt-shift-t = 'move-node-to-workspace T'
+alt-shift-y = 'move-node-to-workspace Y' 
 alt-shift-x = 'move-node-to-workspace X'
+alt-shift-p = 'move-node-to-workspace P'
 
 alt-f = 'fullscreen'
 alt-tab = 'workspace-back-and-forth'
@@ -102,8 +106,11 @@ alt-shift-l = ['join-with right', 'mode main']
 
 [[on-window-detected]]
     if.app-id = 'com.apple.iphonesimulator'
-    run = 'move-node-to-workspace D'
+    run = ['layout tiling', 'move-node-to-workspace D']
 
+[[on-window-detected]]
+    if.window-title-regex-substring = 'React Native'
+    run = 'move-node-to-workspace D'
 
 [[on-window-detected]]
     if.app-id = 'com.electron.cypress'

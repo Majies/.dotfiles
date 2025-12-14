@@ -12,14 +12,9 @@ source "$ITEM_DIR/bar.sh"
 source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/aerospace.sh"
 
-# Center
-source "$ITEM_DIR/front_app.sh"
 
 # Right
 source "$ITEM_DIR/clock.sh"
-# source "$ITEM_DIR/volume.sh"
-# source "$ITEM_DIR/music.sh"
-# source "$ITEM_DIR/battery.sh"
 
 sketchybar --update
 sketchybar --trigger space_change

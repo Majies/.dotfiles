@@ -75,6 +75,9 @@ vim.opt.scrolloff = 10
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Paste without overwriting register
+vim.keymap.set('x', '<leader>p', [["_dP]])
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -94,6 +97,32 @@ vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 
 -- Find todos
 vim.keymap.set('n', '<leader>st', '<cmd>TodoTelescope<CR>', { desc = '[S]earch [T]odos' })
+
+-- Better rename
+vim.keymap.set('n', '<leader>rn', function()
+  -- when rename opens the prompt, this autocommand will trigger
+  -- it will "press" CTRL-F to enter the command-line window `:h cmdwin`
+  -- in this window I can use normal mode keybindings
+  local cmdId
+  cmdId = vim.api.nvim_create_autocmd({ 'CmdlineEnter' }, {
+    callback = function()
+      local key = vim.api.nvim_replace_termcodes('<C-f>', true, false, true)
+      vim.api.nvim_feedkeys(key, 'c', false)
+      vim.api.nvim_feedkeys('0', 'n', false)
+      -- autocmd was triggered and so we can remove the ID and return true to delete the autocmd
+      cmdId = nil
+      return true
+    end,
+  })
+  vim.lsp.buf.rename()
+  -- if LPS couldn't trigger rename on the symbol, clear the autocmd
+  vim.defer_fn(function()
+    -- the cmdId is not nil only if the LSP failed to rename
+    if cmdId then
+      vim.api.nvim_del_autocmd(cmdId)
+    end
+  end, 500)
+end, { desc = '[R]e[n]ame symbol' })
 
 -- Stuff I stole from tpope
 vim.keymap.set('n', '[<Space>', 'O<Esc>j', { desc = 'New line above' })
@@ -191,6 +220,7 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
     },
     config = true,
+    opts = {},
     keys = {
       {
         '<leader>cc',
@@ -294,18 +324,28 @@ require('lazy').setup({
 
   {
     'tpope/vim-fugitive',
-    keys = {
-      { '<leader>gg', ':G<CR>', desc = '[G]it' },
-      { '<leader>ga', ':G add .<CR>', desc = '[G]it [A]dd all' },
-      { '<leader>gp', ':G push<CR>', desc = '[G]it [P]ush' },
-      { '<leader>gfp', ':G push --force<CR>', desc = '[G]it [F]orce [P]ush' },
-      { '<leader>gcm', ':G commit -m ""<Left>', desc = '[G]it [C]ommit [M]essage' },
-      { '<leader>gca', ':G commit --amend --no-edit<CR>', desc = '[G]it [C]ommit [A]mend' },
-      { '<leader>gnb', ':G checkout -b ', desc = '[G]it [N]ew [B]ranch' },
-      { '<leader>gb', ':G branch<CR>', desc = '[G]it [B]ranch' },
-      { '<leader>gum', ':G pull origin main<CR>', desc = '[G]it [U]update [M]ain (pull)' },
-      { '<leader>guc', ':G pull<CR>', desc = '[G]it [U]update [C]urrent (pull)' },
-    },
+    config = function()
+      vim.keymap.set('n', '<leader>gg', ':G<CR>', { desc = '[G]it' })
+      vim.keymap.set('n', '<leader>ga', ':G add .<CR>', { desc = '[G]it [A]dd all' })
+      vim.keymap.set('n', '<leader>gp', ':G push<CR>', { desc = '[G]it [P]ush' })
+      vim.keymap.set('n', '<leader>gfp', ':G push --force<CR>', { desc = '[G]it [F]orce [P]ush' })
+      vim.keymap.set('n', '<leader>gcm', ':G commit -m ""<Left>', { desc = '[G]it [C]ommit [M]essage' })
+      vim.keymap.set('n', '<leader>gca', ':G commit --amend --no-edit<CR>', { desc = '[G]it [C]ommit [A]mend' })
+      vim.keymap.set('n', '<leader>gnb', ':G checkout -b ', { desc = '[G]it [N]ew [B]ranch' })
+      vim.keymap.set('n', '<leader>gum', ':G pull origin main<CR>', { desc = '[G]it [U]update [M]ain (pull)' })
+      vim.keymap.set('n', '<leader>guc', ':G pull<CR>', { desc = '[G]it [U]update [C]urrent (pull)' })
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'fugitive',
+        callback = function(ev)
+          vim.keymap.set('n', '<leader>gq', '<cmd>close<cr>', {
+            buffer = ev.buf,
+            desc = '[G]it [Q]uit (close fugitive)',
+            silent = true,
+          })
+        end,
+      })
+    end,
   },
 
   {
@@ -506,11 +546,16 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          layout_config = {
+            width = {
+              padding = 0,
+            },
+            height = {
+              padding = 0,
+            },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -525,6 +570,7 @@ require('lazy').setup({
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
+      local utils = require 'telescope.utils'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
@@ -536,6 +582,14 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sc', function()
+        if vim.bo.buftype ~= '' or vim.bo.filetype == 'oil' then
+          vim.notify('Not in a file buffer!', vim.log.levels.WARN)
+          return
+        end
+
+        builtin.find_files { cwd = utils.buffer_dir() }
+      end, { desc = "Find files in buffer's directory" })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -648,7 +702,7 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
@@ -760,6 +814,7 @@ require('lazy').setup({
                   'package.json',
                   'tsconfig.json',
                   'Expo SDK',
+                  'Biome Formatter Config',
                 },
               },
               validate = { enable = true },

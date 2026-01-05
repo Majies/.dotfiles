@@ -37,6 +37,10 @@ z4h bindkey z4h-cd-down    Shift+Down   # cd into a child directory
 # Autoload functions.
 autoload -Uz zmv
 
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^E' edit-command-line
+
 # Define functions and completions.
 function md() { [[ $# == 1 ]] && mkdir -p -- "$1" && cd -- "$1" }
 compdef _directories md
@@ -73,7 +77,7 @@ setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 
 export NODE_REPL_HISTORY=""
-export EDITOR=vim
+export EDITOR=nvim
 
 PATH="$PATH":"$HOME/.config/.local/scripts/"
 
@@ -86,3 +90,5 @@ export PATH=$PATH:$HOME/.local/opt/go/bin
 export ATAC_KEY_BINDINGS=~/.config/atac/key-bindings.toml
 
 eval "$(mise activate zsh)"
+
+source ~/.p10k.catppuccin.zsh

@@ -1,5 +1,4 @@
 -- Set <space> as the leader key
-
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
@@ -30,10 +29,8 @@ vim.opt.showmode = false
 --  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
 
-vim.opt.cursorcolumn = false
-
 -- Enable break indent
-vim.opt.breakindent = false
+vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
@@ -71,20 +68,6 @@ vim.opt.inccommand = 'split'
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- Status line stuff
-vim.o.statusline = '%=%F%='
-
-local function transparent_statusline()
-  vim.api.nvim_set_hl(0, 'StatusLine', { bg = 'none' })
-  vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = 'none' })
-end
-
-transparent_statusline()
-
-vim.api.nvim_create_autocmd('ColorScheme', {
-  callback = transparent_statusline,
-})
-
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -96,13 +79,10 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('x', '<leader>p', [["_dP]])
 
 -- Diagnostic keymaps
-vim.keymap.set('n', 'mD', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', 'md', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-
--- Please dont hate me
-vim.keymap.set('n', '<leader>w', ':wa<CR>')
-vim.keymap.set('n', '<leader>q', ':q<CR>')
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Tmux sessionizer
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
@@ -148,9 +128,6 @@ end, { desc = '[R]e[n]ame symbol' })
 vim.keymap.set('n', '[<Space>', 'O<Esc>j', { desc = 'New line above' })
 vim.keymap.set('n', ']<Space>', 'o<Esc>k', { desc = 'New line below' })
 
-vim.keymap.set('n', 'mq', ':cnext<CR>', { desc = 'Go to next quickfix item' })
-vim.keymap.set('n', 'mQ', ':cprev<CR>', { desc = 'Go to previous quickfix item' })
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -162,6 +139,12 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- Center vertically on half page down and up
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Half page up' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Half page down' })
+
+-- TIP: Disable arrow keys in normal mode
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -1048,50 +1031,26 @@ require('lazy').setup({
   --     vim.cmd.hi 'Comment gui=none'
   --   end,
   -- },
-
-  {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
+  { -- You can easily change to a different colorscheme.
+    -- Change the name of the colorscheme plugin below, and then
+    -- change the command in the config to whatever the name of that colorscheme is.
+    --
+    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+    'folke/tokyonight.nvim',
+    priority = 1000, -- Make sure to load this before all the other start plugins.
     opts = {
-      flavour = 'mocha',
-      auto_integrations = true,
-      transparent_background = true,
-      custom_highlights = {
-        NormalFloat = { bg = 'none' },
-        TelescopeBorder = { bg = 'none' },
-      },
+      transparent = true,
     },
     init = function()
-      vim.cmd.colorscheme 'catppuccin'
+      -- Load the colorscheme here.
+      -- Like many other themes, this one has different styles, and you could load
+      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+      vim.cmd.colorscheme 'tokyonight-night'
+
+      -- You can configure highlights by doing something like:
+      vim.cmd.hi 'Comment gui=none'
     end,
   },
-
-  -- { -- You can easily change to a different colorscheme.
-  --   -- Change the name of the colorscheme plugin below, and then
-  --   -- change the command in the config to whatever the name of that colorscheme is.
-  --   --
-  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  --   'folke/tokyonight.nvim',
-  --   priority = 1000, -- Make sure to load this before all the other start plugins.
-  --   opts = {
-  --     style = 'night',
-  --     transparent = true,
-  --
-  --     on_highlights = function(hl, c)
-  --       highlight_telescope_transparent(hl, c)
-  --     end,
-  --   },
-  --   init = function()
-  --     -- Load the colorscheme here.
-  --     -- Like many other themes, this one has different styles, and you could load
-  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  --     vim.cmd.colorscheme 'tokyonight-night'
-  --
-  --     -- You can configure highlights by doing something like:
-  --     vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
 
   -- Highlight todo, notes, etc in comments
   {
@@ -1124,21 +1083,21 @@ require('lazy').setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
-      --
-      -- -- Simple and easy statusline.
-      -- --  You could remove this setup call if you don't like it,
-      -- --  and try some other statusline plugin
-      -- local statusline = require 'mini.statusline'
-      -- -- set use_icons to true if you have a Nerd Font
-      -- statusline.setup { use_icons = vim.g.have_nerd_font }
-      --
-      -- -- You can configure sections in the statusline by overriding their
-      -- -- default behavior. For example, here we set the section for
-      -- -- cursor location to LINE:COLUMN
-      -- ---@diagnostic disable-next-line: duplicate-set-field
-      -- statusline.section_location = function()
-      --   return '%2l:%-2v'
-      -- end
+
+      -- Simple and easy statusline.
+      --  You could remove this setup call if you don't like it,
+      --  and try some other statusline plugin
+      local statusline = require 'mini.statusline'
+      -- set use_icons to true if you have a Nerd Font
+      statusline.setup { use_icons = vim.g.have_nerd_font }
+
+      -- You can configure sections in the statusline by overriding their
+      -- default behavior. For example, here we set the section for
+      -- cursor location to LINE:COLUMN
+      ---@diagnostic disable-next-line: duplicate-set-field
+      statusline.section_location = function()
+        return '%2l:%-2v'
+      end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim

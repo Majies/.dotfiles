@@ -15,10 +15,11 @@ style = "Regular"
 dynamic_title = true
 opacity = 0.8
 decorations = "buttonless"
+dynamic_padding = true
 
   [window.padding]
   x = 8
-  y = 8
+  y = 4
 
 [colors.primary]
 background = "#1e1e2e"
